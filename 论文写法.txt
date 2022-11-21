@@ -1,0 +1,43 @@
+//将数组变成V形
+int MainWindow::getans(QVector<int> &ans)
+{
+    QVector<int>b;
+    int n = ans.size();
+
+    for (int i = 0; i < n; i ++)
+    {
+        b.push_back(ans[i]);
+        while (b.size() > 3 && b[b.size()-2] >= b[b.size()-3] && b[b.size()-2] >= b[b.size()-1])
+        {
+            b[b.size()-3] = b[b.size()-3] + b[b.size()-1] - b[b.size()-2];
+            b.pop_back();
+            b.pop_back();
+        }
+    }
+
+    std::cout << "b ";
+    for (int i : b) std::cout << i << ' ';
+    std::cout << endl;
+
+    int res1 = 0, res2 = 0;
+    int L = 0, R = b.size() - 1;
+    while (L < R) {
+        if (b[L] > b[R]) {
+            res1 += b[L];
+            L ++;
+        } else {
+            res1 += b[R];
+            R --;
+        }
+
+        if (b[L] > b[R]) {
+            res2 += b[L];
+            L ++;
+        } else {
+            res2 += b[R];
+            R --;
+        }
+    }
+    std::cout << "res " << res1 << ' ' << res2 << std::endl;
+    return res1 - res2;
+}
